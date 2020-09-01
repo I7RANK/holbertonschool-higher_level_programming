@@ -9,31 +9,21 @@
 int check_cycle(listint_t *list)
 {
 	listint_t *temp, *temp2;
-	int i, j;
+	int i;
 
-	if (list == NULL)
+	if (list == NULL || list->next == NULL)
 	{
 		return (0);
 	}
 
-	temp = list;
+	temp = list->next;
 	temp2 = list;
-
-	if (temp->next == NULL)
-	{
-		return (0);
-	}
 
 	for (i = 0; temp; i++)
 	{
-		for (j = 0; temp2; j++)
+		if (temp == temp2)
 		{
-			/* printf("temp == %p ==\ntemp2 == %p ==\n\n", (void *)temp, (void *)temp2); */
-			if (temp == temp2 && j != i)
-			{
-				return (1);
-			}
-			temp2 = temp2->next;
+			return (1);
 		}
 		temp = temp->next;
 	}
