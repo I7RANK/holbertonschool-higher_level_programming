@@ -48,6 +48,6 @@ listint_t *insert_node(listint_t **head, int number)
 		addresstemp = temp;
 		temp = temp->next;
 	}
-
-	return (NULL);
+	addresstemp->next = new;
+	return (new);
 }
