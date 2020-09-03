@@ -4,5 +4,5 @@ if __name__ == "__main__":
     hiddlist = dir(hidden_4)
     hiddlist.sort()
     for i in hiddlist:
-        if i.startswith("__") != True:
+        if not(i.startswith("__")):
             print(i)
