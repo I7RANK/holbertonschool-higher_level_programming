@@ -11,29 +11,32 @@
 int is_palindrome(listint_t **head)
 {
 	listint_t *temp = NULL;
-    int buff[3000], len = 0;
+	int buff[3000], len = 0, i = 0;
 
-    if (head == NULL || *head == NULL || (*head)->next == NULL)
-    {
-      	return (1);
-    }
+	if (head == NULL || *head == NULL || (*head)->next == NULL)
+	{
+		return (1);
+	}
+	temp = *head;
 
-    temp = *head;
-    for (len = 0; temp; len++)
-    {
-        buff[len] = temp->n;
-        temp = temp->next;
-    }
-    len--;
-    temp = *head;
-    for (; temp; len--)
-    {
-        if (buff[len] != temp->n)
-        {
-            return (0);
-        }
-        temp = temp->next;
-    }
+	for (len = 0; temp; len++)
+	{
+		buff[len] = temp->n;
+		temp = temp->next;
+	}
+	len--;
 
-    return (1);
+	for (i = 0; buff[len]; len--, i++)
+	{
+		if (buff[len] != buff[i])
+		{
+			return (0);
+		}
+		if (len <= i)
+		{
+			return (1);
+		}
+	}
+
+	return (1);
 }
