@@ -6,5 +6,5 @@ def uniq_add(my_list=[]):
         if i not in uniq:
             uniq.append(i)
             sum += i
-            
+
     return sum
