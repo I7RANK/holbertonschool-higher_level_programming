@@ -18,6 +18,6 @@ void print_python_list_info(PyObject *p)
 	for (i = 0; i < size_p; i++)
 	{
 		str = (char *)PyList_GET_ITEM(p, i)->ob_type->tp_name;
-		printf("[*] Element %d = %s\n", i, str);
+		printf("Element %d = %s\n", i, str);
 	}
 }
