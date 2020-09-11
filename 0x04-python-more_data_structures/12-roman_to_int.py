@@ -21,7 +21,6 @@ def roman_to_int(roman_string):
         return 0
 
     for i in roman_string:
-        print(i)
         if i in conver_roman:
             if conver_roman[i] > prev:
                 sum_roman += conver_roman[i] - (prev * 2)
