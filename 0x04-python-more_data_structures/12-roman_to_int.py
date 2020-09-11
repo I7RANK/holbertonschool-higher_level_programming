@@ -4,7 +4,7 @@ def roman_to_int(roman_string):
     sum_roman = 0
     conver_roman = {}
 
-    if not roman_string:
+    if not roman_string or type(roman_string is not str):
         return 0
 
     conver_roman['I'] = 1
