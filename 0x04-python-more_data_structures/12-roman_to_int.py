@@ -14,13 +14,21 @@ def roman_to_int(roman_string):
     conver_roman['C'] = 100
     conver_roman['D'] = 500
     conver_roman['M'] = 1000
-    prev = conver_roman[roman_string[0]]
+
+    if roman_string[0] in conver_roman:
+        prev = conver_roman[roman_string[0]]
+    else:
+        return 0
 
     for i in roman_string:
-        if conver_roman[i] > prev:
-            sum_roman += conver_roman[i] - (prev * 2)
+        print(i)
+        if i in conver_roman:
+            if conver_roman[i] > prev:
+                sum_roman += conver_roman[i] - (prev * 2)
+            else:
+                sum_roman += conver_roman[i]
+            prev = conver_roman[i]
         else:
-            sum_roman += conver_roman[i]
-        prev = conver_roman[i]
+            return 0
 
     return sum_roman
