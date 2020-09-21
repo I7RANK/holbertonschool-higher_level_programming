@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 def safe_print_list(my_list=[], x=0):
+    real_len = 0
     try:
-        for real_len in range(x):
-            print(my_list[real_len], end="")
+        for i in range(x):
+            print(my_list[i], end="")
+            real_len += 1
     except IndexError:
         print()
-        return real_len
+        return i
     print()
-    return real_len + 1
+    return i + 1
