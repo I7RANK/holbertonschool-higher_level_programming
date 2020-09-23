@@ -34,6 +34,7 @@ class Square:
         if size == 0:
             print()
         else:
+            print("\n" * self._position[1], end="")
             for i in range(size):
                 for k in range(posi[0]):
                     print(end=" ")
