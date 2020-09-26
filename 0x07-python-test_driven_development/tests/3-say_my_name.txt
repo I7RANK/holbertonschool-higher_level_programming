@@ -1,0 +1,25 @@
+======================
+IMPORT
+======================
+    >>> say_my_name = __import__('3-say_my_name').say_my_name
+
+EDGE CASES
+======================
+    >>> say_my_name("Frank", 1234)
+    Traceback (most recent call last):
+    TypeError: last_name must be a string
+
+    >>> say_my_name(1234, "hello")
+    Traceback (most recent call last):
+    TypeError: first_name must be a string
+
+    >>> say_my_name(("hello", "there"), "halo")
+    Traceback (most recent call last):
+    TypeError: first_name must be a string
+
+    >>> say_my_name(("hello", "there"))
+    Traceback (most recent call last):
+    TypeError: first_name must be a string
+
+    >>> say_my_name('F', 'G')
+    My name is F G

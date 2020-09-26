@@ -1,0 +1,33 @@
+======================
+IMPORT
+======================
+    >>> text_indentation = __import__('5-text_indentation').text_indentation
+
+EDGE CASES
+======================
+    >>> text_indentation(123)
+    Traceback (most recent call last):
+    TypeError: text must be a string
+
+    >>> text_indentation('a')
+    a
+
+    >>> text_indentation('?')
+    ?
+    <BLANKLINE>
+
+    >>> text_indentation(' ')
+    <BLANKLINE>
+
+    >>> text_indentation(".  ")
+    .
+    <BLANKLINE>
+
+    >>> text_indentation("   .  ")
+       .
+    <BLANKLINE>
+
+    >>> text_indentation(":              hello")
+    :
+    <BLANKLINE>
+    hello
