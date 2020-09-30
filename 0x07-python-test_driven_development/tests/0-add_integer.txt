@@ -46,3 +46,19 @@ EDGE CASES
 
     >>> print(add_integer(-1-2*4/5-40*2+1, -1-0))
     -82
+
+    >>> print(add_integer(, 20))
+    Traceback (most recent call last):
+    SyntaxError: invalid syntax
+
+    >>> print(add_integer())
+    Traceback (most recent call last):
+    TypeError: add_integer() missing 1 required positional argument: 'a'
+
+    >>> print(add_integer(float('-inf'), float('-inf')))
+    Traceback (most recent call last):
+    OverflowError: cannot convert float infinity to integer
+
+    >>> print(add_integer(float('nan'), float('nan')))
+    Traceback (most recent call last):
+    ValueError: cannot convert float NaN to integer
