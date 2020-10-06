@@ -6,4 +6,4 @@ def lookup(obj):
     """ print all properties and methods of the obj
     Arguments:
         obj{obj} - is the obj to print """
-    print(dir(obj))
+    return dir(obj)
