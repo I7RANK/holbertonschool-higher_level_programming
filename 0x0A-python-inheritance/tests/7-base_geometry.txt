@@ -7,6 +7,18 @@
 >>> bg.integer_validator("width", 5)
 
 
+>>> bg.integer_validator("name", "John")
+Traceback (most recent call last):
+TypeError: name must be an integer
+
+>>> bg.integer_validator("age", 0)
+Traceback (most recent call last):
+ValueError: age must be greater than 0
+
+>>> bg.integer_validator("distance", -4)
+Traceback (most recent call last):
+ValueError: distance must be greater than 0
+
 >>> bg.integer_validator("width", 0)
 Traceback (most recent call last):
 ValueError: width must be greater than 0
@@ -81,3 +93,28 @@ TypeError: integer_validator() missing 1 required positional argument: 'value'
 >>> bg.integer_validator()
 Traceback (most recent call last):
 TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
+
+>>> bg.integer_validator("Hello", (2, 2))
+Traceback (most recent call last):
+TypeError: Hello must be an integer
+
+>>> bg.integer_validator("Hello", {2, 2})
+Traceback (most recent call last):
+TypeError: Hello must be an integer
+
+>>> bg.integer_validator("Hello", -2.5)
+Traceback (most recent call last):
+TypeError: Hello must be an integer
+
+>>> bg.area()
+Traceback (most recent call last):
+Exception: area() is not implemented
+
+>>> bg.integer_validator("", 1)
+
+>>> bg.integer_validator(, )
+Traceback (most recent call last):
+SyntaxError: invalid syntax
+
+>>> a = [1, 2, 3, 4]
+>>> bg.integer_validator("asd", a[1])
