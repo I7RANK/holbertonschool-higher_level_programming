@@ -1,9 +1,13 @@
 #!usr/bin/python3
-""" contains the lookup function """
+"""
+    contains the lookup function
+"""
 
 
 def lookup(obj):
-    """ print all properties and methods of the obj
-    Arguments:
-        obj{obj} - is the obj to print """
+    """
+        print all properties and methods of the obj
+        Arguments:
+            obj{obj} - is the obj to print
+    """
     return dir(obj)
