@@ -50,3 +50,15 @@ Traceback (most recent call last):
 TypeError: integer_validator() takes 3 positional arguments but 4 were given
 
 >>> bg.integer_validator(8, 8)
+
+>>> bg.integer_validator(8, 2.0)
+Traceback (most recent call last):
+TypeError: 8 must be an integer
+
+>>> bg.integer_validator("width", -972549672592795279249279129745959588884884)
+Traceback (most recent call last):
+ValueError: width must be greater than 0
+
+>>> bg.integer_validator(True, 2)
+
+>>> bg.integer_validator(None, 2)
