@@ -1,5 +1,7 @@
 >>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
 
+>>> import sys
+
 >>> bg = BaseGeometry()
 
 >>> bg.integer_validator("width", 5)
@@ -24,3 +26,27 @@ TypeError: width must be an integer
 >>> bg.integer_validator("width", "hi")
 Traceback (most recent call last):
 TypeError: width must be an integer
+
+>>> bg.integer_validator("width", float("inf"))
+Traceback (most recent call last):
+TypeError: width must be an integer
+
+>>> bg.integer_validator("width", 972549672592795279249279129745959588884884)
+
+>>> bg.integer_validator("width", True)
+Traceback (most recent call last):
+TypeError: width must be an integer
+
+>>> bg.integer_validator("width", False)
+Traceback (most recent call last):
+TypeError: width must be an integer
+
+>>> bg.integer_validator("width", "3213543843514368435")
+Traceback (most recent call last):
+TypeError: width must be an integer
+
+>>> bg.integer_validator("width", 8, 20)
+Traceback (most recent call last):
+TypeError: integer_validator() takes 3 positional arguments but 4 were given
+
+>>> bg.integer_validator(8, 8)
