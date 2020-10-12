@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Contains the class rectangle
+"""Contains the class rectangle
 """
 
 
