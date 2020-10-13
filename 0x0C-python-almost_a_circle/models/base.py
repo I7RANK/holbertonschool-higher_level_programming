@@ -46,13 +46,13 @@ class Base():
 
         obj = []
 
-        try:
+        """ try:
             with open(filename) as fl:
                 for i in fl:
                     obj = json.loads(i)
         except FileNotFoundError:
             with open(filename, 'w') as fl:
-                pass
+                pass """
 
         if list_objs is None:
             with open(filename, 'w') as fl:
