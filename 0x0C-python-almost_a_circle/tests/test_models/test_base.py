@@ -5,6 +5,7 @@
 
 import unittest
 import json
+import pep8
 import os
 from models.base import Base
 from models.rectangle import Rectangle
@@ -12,6 +13,13 @@ from models.square import Square
 
 
 class TestBase(unittest.TestCase):
+    def test_pep8_rectangle(self):
+        """test pep8
+        """
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['models/base.py'])
+        self.assertEqual(result.total_errors, 0)
+
     def test_ab_getid(self):
         """test exc id
             this function should go first because it adds 1 to __nb_objects.
