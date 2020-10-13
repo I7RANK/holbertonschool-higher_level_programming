@@ -57,6 +57,7 @@ class Base():
         if list_objs is None:
             with open(filename, 'w') as fl:
                 fl.write("[]")
+            return
 
         for i in list_objs:
             obj.append(i.to_dictionary())
