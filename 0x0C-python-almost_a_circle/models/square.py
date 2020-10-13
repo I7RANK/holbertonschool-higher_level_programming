@@ -32,7 +32,7 @@ class Square(Rectangle):
         t_id = "({}) ".format(self.id)
         t_xy = "{}/{} ".format(self.x, self.y)
         t_wh = "- {}".format(self.size)
-        return "[square] " + t_id + t_xy + t_wh
+        return "[Square] " + t_id + t_xy + t_wh
 
     @property
     def size(self):

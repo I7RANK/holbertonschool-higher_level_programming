@@ -94,6 +94,22 @@ class TestBase(unittest.TestCase):
         with self.assertRaises(TypeError):
             Base([2, 3], 2.5, float('inf'), {'id': 2, 'name': 'hello'})
 
+    def test_ab_rectangle_id(self):
+        r1 = Rectangle(2, 1, 2)
+        r2 = Rectangle(21, 10, 2, 1, 99)
+        r3 = Rectangle(2, 5, 20)
+        self.assertEqual(r1.id, 5)
+        self.assertEqual(r2.id, 99)
+        self.assertEqual(r3.id, 6)
+
+    def test_ab_square_id(self):
+        r1 = Square(2, 1, 2)
+        r2 = Square(21, 2, 1, 20)
+        r3 = Square(2, 5, 20)
+        self.assertEqual(r1.id, 7)
+        self.assertEqual(r2.id, 20)
+        self.assertEqual(r3.id, 8)
+
     def test_ba_to_json_string_str(self):
         """test to_json_string function normal
         """
