@@ -20,6 +20,31 @@ class TestBase(unittest.TestCase):
         result = pep8style.check_files(['models/base.py'])
         self.assertEqual(result.total_errors, 0)
 
+    def test__doc__(self):
+        doc_base = __import__("models").base.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.__init__.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.to_json_string.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.save_to_file.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.from_json_string.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.create.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.load_from_file.__doc__
+        self.assertTrue(doc_base)
+
     def test_ab_getid(self):
         """test exc id
             this function should go first because it adds 1 to __nb_objects.
