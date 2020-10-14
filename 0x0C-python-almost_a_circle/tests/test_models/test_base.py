@@ -47,10 +47,6 @@ class TestBase(unittest.TestCase):
         self.assertEqual(complex(1), Base(complex(1)).id)
         self.assertEqual(float('inf'), Base(float('inf')).id)
 
-
-class Test_Base_to_json_string(unittest.TestCase):
-    """Test to_json_string method
-    """
     def setUp(self):
         """[summary]
         """
@@ -93,10 +89,6 @@ class Test_Base_to_json_string(unittest.TestCase):
         with self.assertRaises(TypeError):
             Base.to_json_string([], 20, 30)
 
-
-class Test_Base_to_save_to_file(unittest.TestCase):
-    """Unit testing to_save_to_file clasmethod.
-    """
     def setUp(self):
         """[summary]
         """
@@ -167,10 +159,6 @@ class Test_Base_to_save_to_file(unittest.TestCase):
         with self.assertRaises(TypeError):
             Square.save_to_file([], [])
 
-
-class Test_Base_from_json_string(unittest.TestCase):
-    """Unit testing for from_json_string method
-    """
     def setUp(self):
         """[summary]
         """
