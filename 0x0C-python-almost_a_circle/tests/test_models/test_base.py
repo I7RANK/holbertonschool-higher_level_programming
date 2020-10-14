@@ -1,196 +1,298 @@
 #!/usr/bin/python3
-""" Unit testing for Base class"""
-import os
-import json
+"""Unittests for module base
+"""
 import unittest
+import json
+import pep8
+import os
 from models.base import Base
 from models.rectangle import Rectangle
 from models.square import Square
-
-
 class TestBase(unittest.TestCase):
-    """Unit testing for Base class.
-    """
-    def test_zero_args(self):
-        """[summary]
+    def test_pep8_rectangle(self):
+        """test pep8
+        """
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['models/base.py'])
+        self.assertEqual(result.total_errors, 0)
+
+    def test__doc__(self):
+        doc_base = __import__("models").base.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.__init__.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.to_json_string.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.save_to_file.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.from_json_string.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.create.__doc__
+        self.assertTrue(doc_base)
+
+        doc_base = Base.load_from_file.__doc__
+        self.assertTrue(doc_base)
+
+    def test_ab_getid(self):
+        """test exc id
+            this function should go first because it adds 1 to __nb_objects.
+            it damages the function below if it gets under of test_id_str
+            test executes in order alphabetic
+        """
+        with self.assertRaises(AttributeError):
+            print(Base.__nb_objects)
+    def test_aa_id(self):
+        """test normal id
         """
         base1 = Base()
         base2 = Base()
+        base3 = Base()
+        base10 = Base(12)
+        basen10 = Base(-10)
+        self.assertEqual(base1.id, 1)
         self.assertEqual(base2.id, 2)
-
-    def test_one_arg(self):
-        """[summary]
+        self.assertEqual(base3.id, 3)
+        self.assertEqual(base10.id, 12)
+        self.assertEqual(basen10.id, -10)
+    def test_aa_id_str(self):
+        """test str id
         """
-        base1 = Base(2)
-        base2 = Base(2)
-        self.assertEqual(base2.id, base1.id)
-
-    def test_more_args(self):
-        """[summary]
+        base4 = Base(None)
+        basestr = Base("0x01")
+        basehola = Base("hola")
+        basec2 = Base('2')
+        self.assertEqual(base4.id, 4)
+        self.assertEqual(basestr.id, "0x01")
+        self.assertEqual(basehola.id, "hola")
+        self.assertEqual(basec2.id, '2')
+    def test_aa_id_float_tf(self):
+        """test floats and boolean id
         """
-        with self.assertRaises(TypeError):
-            Base(1, 2, 3)
-
-    def test_types(self):
-        """[summary]
+        base = Base(1.2)
+        basen = Base(-1.2)
+        basetrue = Base(True)
+        basefalse = Base(False)
+        basefinf = Base(float('inf'))
+        self.assertEqual(base.id, 1.2)
+        self.assertEqual(basen.id, -1.2)
+        self.assertEqual(basetrue.id, True)
+        self.assertEqual(basefalse.id, False)
+        self.assertEqual(basefinf.id, float('inf'))
+    def test_aa_id_struct(self):
+        """test struct id
         """
-        self.assertEqual([1, 2], Base([1, 2]).id)
-        self.assertEqual((1, 2), Base((1, 2)).id)
-        self.assertEqual(True, Base(True).id)
-        self.assertEqual({1, 2, 3}, Base({1, 2, 3}).id)
-        self.assertEqual({'a': 1, 'b': 2}, Base({'a': 1, 'b': 2}).id)
-        self.assertEqual('Nan', Base('Nan').id)
-        self.assertEqual(-10, Base(-10).id)
-        self.assertEqual(0, Base(0).id)
-        self.assertEqual('Hi', Base('Hi').id)
-        self.assertEqual(5.5, Base(5.5).id)
-        self.assertEqual(complex(1), Base(complex(1)).id)
-        self.assertEqual(float('inf'), Base(float('inf')).id)
-
-    def setUp(self):
-        """[summary]
-        """
-        r1 = Rectangle(2, 3)
-        r2 = Rectangle(4, 5)
-        s1 = Square(5)
-        s2 = Square(10)
-        self.list_sq = [s1.to_dictionary(), s2.to_dictionary()]
-        self.list_rect = [r1.to_dictionary(), r2.to_dictionary()]
-
-    def test_dict_rectangles(self):
-        """[summary]
-        """
-        self.assertEqual(str, type(Base.to_json_string(self.list_rect)))
-        self.assertTrue(len(Base.to_json_string(self.list_rect)) == 104)
-        self.assertTrue(len(Base.to_json_string([self.list_rect[0]])) == 52)
-
-    def test_dict_squares(self):
-        """[summary]
-        """
-        self.assertEqual(str, type(Base.to_json_string(self.list_sq)))
-        self.assertFalse(len(Base.to_json_string(self.list_sq)) == 77)
-        self.assertTrue(len(Base.to_json_string([self.list_sq[0]])) == 38)
-
-    def test_list_Empty(self):
-        """[summary]
-        """
-        self.assertEqual('[]', Base.to_json_string([]))
-        self.assertEqual('[]', Base.to_json_string(None))
-
-    def test_without_args(self):
-        """[summary]
+        base = Base([1, 2])
+        base2 = Base({1, 2})
+        base3 = Base((1, 2))
+        base4 = Base({'id': 12, 'name': 'hello'})
+        base5 = Base([None, None])
+        lis = [None, ({'id': 12, 'name': 'hello'}, [2, (2, 3)])]
+        base6 = Base(lis)
+        self.assertEqual(base.id, [1, 2])
+        self.assertEqual(base2.id, {1, 2})
+        self.assertEqual(base3.id, (1, 2))
+        self.assertEqual(base4.id, {'id': 12, 'name': 'hello'})
+        self.assertEqual(base5.id, [None, None])
+        self.assertEqual(base6.id, lis)
+    def test_aa_more_args_base(self):
+        """test passing more args
         """
         with self.assertRaises(TypeError):
-            Base.to_json_string()
-
-    def test_more_than_one_arg(self):
-        """[summary]
+            Base(2, 3)
+        with self.assertRaises(TypeError):
+            Base([2, 3], (2, 3))
+        with self.assertRaises(TypeError):
+            Base(True, False, 0)
+        with self.assertRaises(TypeError):
+            Base([2, 3], 2.5, float('inf'), {'id': 2, 'name': 'hello'})
+    def test_ab_rectangle_id(self):
+        r1 = Rectangle(2, 1, 2)
+        r2 = Rectangle(21, 10, 2, 1, 99)
+        r3 = Rectangle(2, 5, 20)
+        self.assertEqual(r1.id, 5)
+        self.assertEqual(r2.id, 99)
+        self.assertEqual(r3.id, 6)
+    def test_ab_square_id(self):
+        r1 = Square(2, 1, 2)
+        r2 = Square(21, 2, 1, 20)
+        r3 = Square(2, 5, 20)
+        self.assertEqual(r1.id, 7)
+        self.assertEqual(r2.id, 20)
+        self.assertEqual(r3.id, 8)
+    def test_ba_to_json_string_str(self):
+        """test to_json_string function normal
+        """
+        true_str = '[{"id": 1, "size": 20}]'
+        check = True
+        json_str = Base.to_json_string([{'id': 1, 'size': 20}])
+        for i in json_str:
+            if i not in true_str:
+                check = False
+        self.assertTrue(check)
+        self.assertIn('"id": 1', json_str)
+        self.assertIn('"size": 20', json_str)
+    def test_ba_to_json_string_vs_json_str(self):
+        """test passing more args
+        """
+        json_str = Base.to_json_string([{'id': 1, 'size': 20}])
+        json_json = json.dumps([{'id': 1, 'size': 20}])
+        self.assertEqual(json_str, json_json)
+        json_str = Base.to_json_string('[{"id": 1, "size": 20}]')
+        str_expe = '"[{\\"id\\": 1, \\"size\\": 20}]"'
+        self.assertEqual(json_str, str_expe)
+    def test_ba_to_json_string_none(self):
+        """test passing none
+        """
+        json_str = Base.to_json_string(None)
+        self.assertEqual(json_str, "[]")
+        json_str = Base.to_json_string([])
+        self.assertEqual(json_str, "[]")
+        json_str = Base.to_json_string([None])
+        self.assertEqual(json_str, "[null]")
+    def test_ba_to_json_string_type(self):
+        """test check the type
+        """
+        json_str = Base.to_json_string([None])
+        self.assertEqual(type(json_str), str)
+        json_str = Base.to_json_string('[{"id": 1, "size": 20}]')
+        self.assertEqual(type(json_str), str)
+        json_str = Base.to_json_string([{'id': 1, 'size': 20}])
+        json_json = json.dumps([{'id': 1, 'size': 20}])
+        self.assertEqual(type(json_str), type(json_json))
+    def test_ba_to_json_string_moreargs(self):
+        """test passing more args
         """
         with self.assertRaises(TypeError):
-            Base.to_json_string([], 20, 30)
-
-    def setUp(self):
-        """[summary]
+            Base.to_json_string([2, 3], [{"id": 1, "size": 20}])
+        with self.assertRaises(TypeError):
+            Base.to_json_string('[2, 3]', '[{"id": 1, "size": 20}]')
+    def test_ba_to_json_string_other_types(self):
+        """test passing other types of data
         """
-        self.r1 = Rectangle(5, 5, 5, 5, 1)
-        self.r2 = Rectangle(6, 6, 6, 6, 2)
-        self.s1 = Square(4, 4, 4, 3)
-        self.s2 = Square(3, 3, 3, 4)
-
-    def tearDown(self):
-        """[summary]
+        json_str = Base.to_json_string(20)
+        self.assertEqual(json_str, "20")
+        json_str = Base.to_json_string(True)
+        self.assertEqual(json_str, "true")
+        json_str = Base.to_json_string(float('inf'))
+        self.assertEqual(json_str, "Infinity")
+        json_str = Base.to_json_string((2, 20))
+        self.assertEqual(json_str, "[2, 20]")
+        json_str = Base.to_json_string({20: 20, 30: 30})
+        self.assertEqual(json_str, '{"20": 20, "30": 30}')
+    def test_ca_from_json_string_vs_json(self):
+        """test from_json_string function
         """
-        if os.path.isfile('Rectangle.json'):
-            os.remove('Rectangle.json')
-        if os.path.isfile('Square.json'):
-            os.remove('Square.json')
-
-    def test_to_save_one_rect(self):
-        """[summary]
-        """
-        Rectangle.save_to_file([self.r1])
-        with open('Rectangle.json', 'r') as f:
-            self.assertEqual(list, type(json.load(f)))
-
-    def test_to_save_two_rect(self):
-        """[summary]
-        """
-        Rectangle.save_to_file([self.r1, self.r2])
-        with open('Rectangle.json', 'r') as f:
-            self.assertEqual(list, type(json.load(f)))
-
-    def test_to_save_one_square(self):
-        """[summary]
-        """
-        Square.save_to_file([self.s1])
-        with open('Square.json', 'r') as f:
-            self.assertEqual(list, type(json.load(f)))
-
-    def test_to_save_two_square(self):
-        """[summary]
-        """
-        Square.save_to_file([self.s1, self.s2])
-        with open('Square.json', 'r') as f:
-            self.assertEqual(list, type(json.load(f)))
-
-    def test_to_save_None(self):
-        """[summary]
-        """
-        Square.save_to_file(None)
-        with open('Square.json', 'r') as f:
-            self.assertEqual(0, len(json.load(f)))
-
-    def test_to_save_empty_list(self):
-        """[summary]
-        """
-        Rectangle.save_to_file([])
-        with open('Rectangle.json', 'r') as f:
-            self.assertEqual(0, len(json.load(f)))
-
-    def test_to_save_not_args(self):
-        """[summary]
+        json_str = Base.to_json_string([{'id': 1, 'size': 20}])
+        json_loads = json.loads(json_str)
+        json_base = Base.from_json_string(json_str)
+        self.assertEqual(json_base, json_loads)
+        list_input = [
+            {'id': 89, 'width': 10, 'height': 4},
+            {'id': 7, 'width': 1, 'height': 7}
+        ]
+        json_list_input = Base.to_json_string(list_input)
+        list_output = Base.from_json_string(json_list_input)
+        list_output_json = json.loads(json_list_input)
+        self.assertEqual(list_output, list_output_json)
+    def test_ca_from_json_string_more_args(self):
+        """test from_json_string with more args
         """
         with self.assertRaises(TypeError):
-            Rectangle.save_to_file()
-
-    def test_to_save_more_args(self):
-        """[summary]
+            json_base = Base.from_json_string("[2, 3]", "[[2, 3]]")
+        with self.assertRaises(TypeError):
+            json_base = Base.from_json_string("[2, 3]", "[[2, 3]]", "(2, 3)")
+    def test_ca_from_json_string_no_str(self):
+        """test from_json_string but no pass str
         """
         with self.assertRaises(TypeError):
-            Square.save_to_file([], [])
-
-    def setUp(self):
-        """[summary]
-        """
-        self.list_square = [{'id': 89, 'width': 10, 'height': 4},
-                            {'id': 7, 'width': 1, 'height': 7}]
-        self.list_rect = [{'id': 1, 'x': 2, 'size': 10, 'y': 1},
-                          {'id': 2, 'x': 3, 'size': 15, 'y': 2}]
-
-    def test_output(self):
-        """[summary]
-        """
-        list_input_rect = Rectangle.to_json_string(self.list_rect)
-        list_out_rect = Rectangle.from_json_string(list_input_rect)
-        list_input_sq = Square.to_json_string(self.list_square)
-        list_out_sq = Square.from_json_string(list_input_sq)
-        self.assertEqual(list_out_rect, self.list_rect)
-        self.assertEqual(list_out_sq, self.list_square)
-
-    def test_None_empty_list(self):
-        """[summary]
-        """
-        self.assertEqual(list(), Base.from_json_string([]))
-        self.assertEqual(list(), Base.from_json_string(None))
-
-    def test_pass_zero_args(self):
-        """[summary]
-        """
+            json_base = Base.from_json_string(2)
         with self.assertRaises(TypeError):
-            Base.from_json_string()
-
-    def test_pass_more_args(self):
-        """[summary]
-        """
+            json_base = Base.from_json_string(True)
         with self.assertRaises(TypeError):
-            Base.from_json_string([], [])
+            json_base = Base.from_json_string([True, [2, 3]])
+    def test_da_save_to_file_create(self):
+        """test checks if it's creates the file
+        """
+        r1 = Rectangle(10, 7, 2, 8)
+        r2 = Rectangle(2, 4)
+        Rectangle.save_to_file([r1, r2])
+        with open("Rectangle.json", "r") as file:
+            len_fl = len(file.read())
+        self.assertTrue(len_fl)
+        remove_files()
+    def test_da_save_to_file_contend(self):
+        """test checks if the contend in Rectangle.json is correct
+        """
+        r1 = Rectangle(10, 7, 2, 8)
+        r2 = Rectangle(2, 4)
+        Rectangle.save_to_file([r1, r2])
+        obj = []
+        for i in [r1, r2]:
+            obj.append(i.to_dictionary())
+        json_str = Rectangle.to_json_string(obj)
+        with open("Rectangle.json", "r") as file:
+            contend_fl = file.read()
+        self.assertEqual(json_str, contend_fl)
+    def test_ea_create_type(self):
+        """test create function
+        """
+        r1 = Rectangle(3, 5, 1)
+        r1_dictionary = r1.to_dictionary()
+        r2 = Rectangle.create(**r1_dictionary)
+        self.assertEqual(type(r1), type(r2))
+    def test_ea_create_is_equals(self):
+        """test create function
+        """
+        r1 = Rectangle(3, 5, 1)
+        r1_dictionary = r1.to_dictionary()
+        r2 = Rectangle.create(**r1_dictionary)
+        is_ = False
+        equ = False
+        if r1 is r2:
+            is_ = True
+        if r1 == r2:
+            equ = True
+        self.assertFalse(is_)
+        self.assertFalse(equ)
+        self.assertNotEqual(r1, r2)
+    def test_ea_create_isinstance(self):
+        """test checks the if is instance of Rectangle class
+        """
+        r1 = Rectangle(3, 5, 1)
+        r1_dictionary = r1.to_dictionary()
+        r2 = Rectangle.create(**r1_dictionary)
+        self.assertIsInstance(r1, Rectangle)
+        self.assertIsInstance(r2, Rectangle)
+    def test_ea_create_None_and_others(self):
+        """test pass None
+        """
+        r1_dictionary = None
+        with self.assertRaises(TypeError):
+            r2 = Rectangle.create(**r1_dictionary)
+        with self.assertRaises(TypeError):
+            r2 = Rectangle.create(None)
+        with self.assertRaises(TypeError):
+            r2 = Rectangle.create(0)
+        with self.assertRaises(TypeError):
+            r2 = Rectangle.create("json")
+        with self.assertRaises(TypeError):
+            r2 = Rectangle.create({'id': 1000, 'width': 20})
+def remove_files():
+    """removes Rectangle.json and Square.json file
+    """
+    try:
+        os.remove("Square.json")
+    except OSError:
+        pass
+    try:
+        os.remove("Rectangle.json")
+    except OSError:
+        pass
