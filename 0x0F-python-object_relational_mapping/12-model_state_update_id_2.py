@@ -30,7 +30,7 @@ if __name__ == "__main__":
     s = update(State).where(
         State.id == 2
     ).values(
-        name = "New Mexico"
+        name="New Mexico"
     )
 
     rs = engine.execute(s)
