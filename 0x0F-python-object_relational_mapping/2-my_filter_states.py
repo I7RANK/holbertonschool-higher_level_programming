@@ -28,7 +28,7 @@ if __name__ == "__main__":
     cur = db.cursor()
 
     """ execute to execte a query """
-    query_str = "SELECT * FROM states WHERE name = "
+    query_str = "SELECT * FROM states WHERE name LIKE BINARY "
     cur.execute(query_str + "'{}' ORDER BY id ASC".format(user_input))
 
     """ tuple wiat all rows """
