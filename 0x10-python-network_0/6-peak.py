@@ -13,10 +13,12 @@ def find_peak(list_of_integers):
 
     list_ = list_of_integers
     l_len = len(list_)
-    peak = 100000
+    peak = list_[0]
     i = 0
     while i < l_len:
         """ print(list_[i], i, l_len) """
+        if peak < list_[i]:
+            peak = list_[i]
         if i == 0:
             if i < l_len - 1:
                 if list_[i] > list_[i + 1]:
@@ -30,4 +32,4 @@ def find_peak(list_of_integers):
 
         i += 1
 
-    return max(list_)
+    return peak
