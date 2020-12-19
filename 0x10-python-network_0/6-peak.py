@@ -16,19 +16,16 @@ def find_peak(list_of_integers):
     peak = list_[0]
     i = 0
     while i < l_len:
-        """ print(list_[i], i, l_len) """
         if peak < list_[i]:
             peak = list_[i]
-        if i == 0:
-            if i < l_len - 1:
-                if list_[i] > list_[i + 1]:
+
+        if i < l_len - 1:
+            if list_[i] > list_[i + 1]:
+                if i == 0:
                     return list_[i]
-        else:
-            if i < l_len - 1:
-                if list_[i] > list_[i + 1]:
-                    if list_[i] > list_[i - 1]:
-                        return list_[i]
-                    i += 1
+                if list_[i] > list_[i - 1]:
+                    return list_[i]
+                i += 1
 
         i += 1
 
