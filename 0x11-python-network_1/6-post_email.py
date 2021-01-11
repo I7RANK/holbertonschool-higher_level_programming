@@ -3,9 +3,9 @@
 import requests
 import sys
 
+if __name__ == "__main__":
+    data = {"email": sys.argv[2]}
 
-data = {"email": sys.argv[2]}
+    req = requests.post(sys.argv[1], data=data)
 
-req = requests.post(sys.argv[1], data=data)
-
-print(req.text)
+    print(req.text)
