@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ displays info about https://intranet.hbtn.io/status """
 
 import urllib.request
