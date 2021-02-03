@@ -20,7 +20,7 @@ function secondMax (list) {
   console.log(secondmax);
 }
 
-if (!num.length) {
+if (!num.length || num.length === 1) {
   console.log(0);
 } else {
   secondMax(num);

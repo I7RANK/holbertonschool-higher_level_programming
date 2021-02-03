@@ -2,12 +2,11 @@
 
 const num = parseInt(process.argv[2]);
 
-function factorial (a, b = 1) {
+function factorial (a) {
   if (a > 1) {
-    b *= a;
-    b = factorial(a - 1, b);
+    a *= factorial(a - 1);
   }
-  return b;
+  return a;
 }
 
 console.log(factorial(num));
